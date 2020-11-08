@@ -216,3 +216,13 @@ body {
     width: 300px;
     margin: 0 auto;
 }
+
+.justify-content-center {
+    font-family: BMJUA;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.footer-jocoding {
+    color: #FF0000;
+}
