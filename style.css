@@ -207,6 +207,10 @@ body {
   font-size: 1rem;
 }
 
+.result-explain {
+    color: #35465d;
+}
+
 .ad-banner1 {
     width: 320px;
     margin: 0 auto;

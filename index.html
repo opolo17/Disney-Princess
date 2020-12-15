@@ -80,10 +80,8 @@
             </div>
             <div class="file-upload-content">
                 <img class="file-upload-image" id="face-image" src="#" alt="your image" />
-                <p
-                    class="result-message"
-                    style="font-family: BMJUA; font-size: 1.3rem;"
-                ></p>
+                <p class="result-message" style="font-family: BMJUA; font-size: 1.3rem;"></p>
+                <p class="result-explain ml-5 mr-5" style="font-family: BMJUA; font-size: 1.1rem;"></p>
                 <div id="label-container" style="font-family: BMJUA; font-size: 1rem;"></div>
                 <!-- Go to www.addthis.com/dashboard to customize your tools -->
                 <div class="addthis_inline_share_toolbox_z6fs"></div>
@@ -264,41 +262,54 @@ this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your pag
                 const prediction = await model.predict(image, false);
                 prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
                 var resultMessage;
+                var resultExplain;
                 switch (prediction[0].className) {
                     case '<겨울왕국>안나':
                         resultMessage = "<겨울왕국>'안나'상";
+                        resultExplain = "발랄하고 명랑한 성격을 가졌으며 겁이 없고 행동력이 강한 당신! 한편 금사빠 기질이 있기도 하지만 조화로운 것을 좋아한다고 합니다. [참고: ESFJ]";
                         break;
                     case '<겨울왕국>엘사':
                         resultMessage = "<겨울왕국>'엘사'상";
+                        resultExplain = "겉으로 보기엔 차갑고 냉정해 보일 것 같지만 실제로는 여리고 착한 성격의 당신! 주변 사람들에게 조언을 해주는 어른스럽고 성숙한 면을 보여주기도 한답니다. [참고: INFJ]";
                         break;
                     case '<라푼젤>라푼젤':
                         resultMessage = "<라푼젤>'라푼젤'상";
+                        resultExplain = "세상 밖을 두려워하고 남자를 멀리하는 경향이 있기도 하지만 마음속으로는 항상 호기심이 넘치고 모험심도 강한 편인 당신! 손재주가 좋고 예술에도 능하다고 합니다. [참고: ESFJ]";
                         break;
                     case '<메리다와 마법의 숲>메리다':
                         resultMessage = "<메리다와 마법의 숲>'메리다'상";
+                        resultExplain = "활발하고 운동을 잘하는 편이며 규칙적인 삶을 싫어하고, 누군가 자신에게 명령하는 것을 싫어하는 당신! 자유로운 삶을 원한다고 합니다. [참고: ESTP]";
                         break;
                     case '<뮬란>뮬란':
                         resultMessage = "<뮬란>'뮬란'상";
+                        resultExplain = "신체적 활동에 뛰어나며 약간은 불같은 성격이지만 소위 걸크러쉬인 당신! 하지만 정확한 해법을 확인하는 논리적인 사고를 가지고 있답니다. [참고: ISTP]";
                         break;
                     case '<신데렐라>신데렐라':
                         resultMessage = "<신데렐라>'신데렐라'상";
+                        resultExplain = "괴롭힘을 받으면서도, 용기와 친절함을 잃지 않으려고 노력한 착하면서도 의지가 강한 당신! 다른 사람을 돕고자 하는 마음이 크며, 독립적인 것보다는 평화 유지를 원한다고 합니다. [참고: ISFJ]";
                         break;
                     case '<백설공주>백설공주':
                         resultMessage = "<백설공주>'백설공주'상";
+                        resultExplain = "친구들과 따뜻한 우정을 나누고 가정적인 당신! 전통적인 것에 안정감을 느끼며 기존의 질서를 깨뜨리고 싶어하지 않는다고 합니다. [참고: ESFJ]";
                         break;
                     case '<미녀와 야수>벨':
                         resultMessage = "<미녀와 야수>'벨'상";
+                        resultExplain = "내적 조화를 중요하게 생각하며 마음 깊은 감정을 사람들에게 잘 드러내지 않는 당신! 우아하고 지적이면서 당당한 인상이라고 합니다. [참고: INFP]";
                         break;
                     case '<모아나>모아나':
                         resultMessage = "<모아나>'모아나'상";
+                        resultExplain = "책임감이 강하고, 자신의 신념대로 행동하는 당신! 전통을 지키기위해 노력하기보다는 새로운 것을 탐구하는 리더쉽과 모험심이 강하다고 합니다. [참고: ENFP]";
                         break;
                     case '<잠자는 숲속의 공주>오로라':
                         resultMessage = "<잠자는 숲속의 공주>'오로라'상";
+                        resultExplain = "내성적이고 조용한 편이지만 사람들과 일하는 것을 좋아하고, 아름다운 외모로 사랑을 받는 당신! 자연을 사랑하고 동물을 사랑한다고 합니다. [참고: ISFP]";
                         break;
                     default:
                         resultMessage = '알수없음';
+                        resultExplain = "알수없음";
                 }
                 $('.result-message').html(resultMessage);
+                $('.result-explain').html(resultExplain);
                 for (let i = 0; i < 3; i++) {
                     const classPrediction =
                         prediction[i].className + ': ' + 100*(prediction[i].probability.toFixed(2)) + '%';
