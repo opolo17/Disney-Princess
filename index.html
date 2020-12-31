@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="얼굴로 보는 디즈니 공주상 테스트, 나와 닮은 디즈니 공주와 그 공주의 MBTI를 찾아보세요!" />
         <meta property="og:type" content="website"> 
-        <meta property="og:title" content="디즈니 공주상 테스트">
+        <meta property="og:title" content="디즈니 공주상 & MBTI 테스트">
         <meta property="og:description" content="얼굴로 보는 디즈니 공주상 테스트, 나와 닮은 디즈니 공주와 그 공주의 MBTI를 찾아보세요!">
         <meta property="og:image" content="img/disney-favicon.ico">
         <meta property="og:url" content="https://disneyprincess-face.netlify.app/">
@@ -19,7 +19,7 @@
             crossorigin="anonymous"
         />
 
-        <title>디즈니 공주상 테스트</title>
+        <title>디즈니 공주상 & MBTI 테스트</title>
         <link rel="stylesheet" href="style.css" />
         <link rel="shortcut icon" href="img/disney-favicon.ico" type="image/x-icon" />
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
@@ -27,7 +27,7 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light nav-distance">
-            <a class="navbar-brand" style="font-family: BMJUA; font-size: 1.4rem;" href="#">디즈니 공주상 테스트</a>
+            <a class="navbar-brand" style="font-family: BMJUA; font-size: 1.4rem;" href="#">디즈니 공주상 & MBTI 테스트</a>
             <button
                 class="navbar-toggler"
                 type="button"
@@ -46,7 +46,7 @@
             </div>
         </nav>
         <section class="section">
-            <h1 class="title">디즈니 공주상 테스트</h1>
+            <h1 class="title">디즈니 공주상 & MBTI 테스트</h1>
             <h2 class="subtitle">나는 어떤 디즈니 공주와 닮았을까?</h2>
         </section>
         <section class="youtube">
@@ -63,7 +63,7 @@
             class="jsbin"
             src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
         ></script>
-        <div class="file-upload mb-5">
+        <div class="file-upload container mb-1">
             <div class="image-upload-wrap">
                 <input
                     class="file-upload-input"
@@ -73,16 +73,24 @@
                 />
                 <div class="drag-text">
                     <img src="img/upload.svg" class="mt-5 pt-5 upload" />
-                    <h3 class="md-5 pb-5 pt-4 upload-text">
+                    <h3 class="pb-5 pt-4 upload-text">
                         얼굴 사진을 올려놓거나 눌러서 업로드하세요!
                     </h3>
                 </div>
             </div>
             <div class="file-upload-content">
                 <img class="file-upload-image" id="face-image" src="#" alt="your image" />
-                <p class="result-message" style="font-family: BMJUA; font-size: 1.3rem;"></p>
-                <p class="result-explain ml-5 mr-5" style="font-family: BMJUA; font-size: 1.1rem;"></p>
-                <div id="label-container" style="font-family: BMJUA; font-size: 1rem;"></div>
+                <div id="loading" class="animated bounce">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                   <p class="text-font text-center" style="font-size: 0.9rem;">AI가 당신의 동물상을 분석중입니다.</p>
+                </div>
+                <div class="wait-message">
+                    <p class="text-font result-message" style="font-size: 1.3rem;"></p>
+                    <p class="text-font result-explain ml-5 mr-5" style="font-size: 1.1rem;"></p>
+                    <div id="label-container" style="font-family: BMJUA; font-size: 1rem;"></div>
+                </div>
                 <!-- Go to www.addthis.com/dashboard to customize your tools -->
                 <div class="addthis_inline_share_toolbox_z6fs"></div>
                 <div class="image-title-wrap">
@@ -92,7 +100,9 @@
                 </div>
             </div>
         </div>
-        <div id="webcam-container"></div>
+        <h4 class="text-font text-center mb-5" style="font-size: 1rem;">
+            *사진은 어디에도 저장되지 않습니다
+        </h4>
         <div id="disqus_thread"></div>
         <div class="ad-banner1">
             <ins class="kakao_ad_area" style="display:none;" 
@@ -198,9 +208,10 @@ this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your pag
 
                     reader.onload = function (e) {
                         $('.image-upload-wrap').hide();
-
+                        $('#loading').show();
                         $('.file-upload-image').attr('src', e.target.result);
                         $('.file-upload-content').show();
+                        $('.wait-message').hide();
 
                         $('.image-title').html(input.files[0].name);
                     };
@@ -209,6 +220,8 @@ this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your pag
                     init().then(() => {
                         getRandomColor();
                         predict();
+                        $('#loading').hide();
+                        $('.wait-message').show();
                     });
                 } else {
                     removeUpload();
