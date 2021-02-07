@@ -4,10 +4,10 @@
         <!-- Required meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="얼굴로 보는 디즈니 공주상 테스트, 나와 닮은 디즈니 공주와 그 공주의 MBTI를 찾아보세요!" />
+        <meta name="description" content="얼굴로 보는 디즈니 캐릭터상 테스트, 나와 닮은 디즈니 캐릭터와 그 캐릭터의 MBTI를 찾아보세요!" />
         <meta property="og:type" content="website"> 
-        <meta property="og:title" content="디즈니 공주상 & MBTI 테스트">
-        <meta property="og:description" content="얼굴로 보는 디즈니 공주상 테스트, 나와 닮은 디즈니 공주와 그 공주의 MBTI를 찾아보세요!">
+        <meta property="og:title" content="디즈니 캐릭터상 & MBTI 테스트">
+        <meta property="og:description" content="얼굴로 보는 디즈니 캐릭터상 테스트, 나와 닮은 디즈니 캐릭터와 그 캐릭터의 MBTI를 찾아보세요!">
         <meta property="og:image" content="img/disney-favicon.ico">
         <meta property="og:url" content="https://disneyprincess-face.netlify.app/">
         <link rel="canonical" href="https://disneyprincess-face.netlify.app/">
@@ -19,7 +19,7 @@
             crossorigin="anonymous"
         />
 
-        <title>디즈니 공주상 & MBTI 테스트</title>
+        <title>디즈니 캐릭터상 & MBTI 테스트</title>
         <link rel="stylesheet" href="style.css" />
         <link rel="shortcut icon" href="img/disney-favicon.ico" type="image/x-icon" />
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
@@ -46,7 +46,7 @@
             </div>
         </nav>
         <section class="section">
-            <h1 class="title">디즈니 공주상 & MBTI 테스트</h1>
+            <h1 class="title">디즈니 캐릭터상 & MBTI 테스트</h1>
             <h2 class="subtitle">나는 어떤 디즈니 공주와 닮았을까?</h2>
         </section>
         <section class="youtube">
@@ -58,12 +58,25 @@
                 >
             </div>
         </section>
+        <h3 class="pb-2 d-flex justify-content-center">성별을 선택하세요</h3>
+        <section class="d-flex justify-content-center">
+            <p class="d-flex align-items-center pr-3">여자</p>
+            <div>
+                <input type="checkbox" id="gender">
+                <label for="gender">
+                    <span class="knob">
+                        <i></i>
+                    </span>
+                </label>
+            </div>
+            <p class="d-flex align-items-center pl-3">남자</p>
+        </section>
 
         <script
             class="jsbin"
             src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
         ></script>
-        <div class="file-upload container mb-1">
+        <div class="file-upload container mt-3 mb-1">
             <div class="image-upload-wrap">
                 <input
                     class="file-upload-input"
@@ -87,9 +100,9 @@
                    <p class="text-font text-center" style="font-size: 0.9rem;">AI가 당신의 공주상을 분석중입니다.</p>
                 </div>
                 <div class="wait-message">
-                    <p class="text-font result-message" style="font-size: 1.3rem;"></p>
-                    <p class="text-font result-explain ml-5 mr-5" style="font-size: 1.1rem;"></p>
-                    <div id="label-container" style="font-family: BMJUA; font-size: 1rem;"></div>
+                    <p class="text-font result-message"></p>
+                    <p class="text-font result-explain ml-5 mr-5"></p>
+                    <div class="mb-2" id="label-container" style="font-family: BMJUA; font-size: 1rem; color: #797676;"></div>
                 </div>
                 <!-- Go to www.addthis.com/dashboard to customize your tools -->
                 <div class="addthis_inline_share_toolbox_z6fs"></div>
@@ -245,12 +258,18 @@ this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your pag
             // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
 
             // the link to your model provided by Teachable Machine export panel
-            const URL = 'https://teachablemachine.withgoogle.com/models/c-zCLGYpP/';
+            const urlMale = 'https://teachablemachine.withgoogle.com/models/5nHlnVuSU/';
+            const urlFemale = 'https://teachablemachine.withgoogle.com/models/c-zCLGYpP/';
 
             let model, webcam, labelContainer, maxPredictions;
 
             // Load the image model and setup the webcam
             async function init() {
+                if (document.getElementById("gender").checked) {
+                    URL = urlMale;
+                } else {
+                    URL = urlFemale;
+                }
                 const modelURL = URL + 'model.json';
                 const metadataURL = URL + 'metadata.json';
 
@@ -276,50 +295,78 @@ this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your pag
                 prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
                 var resultMessage;
                 var resultExplain;
-                switch (prediction[0].className) {
-                    case '<겨울왕국>안나':
-                        resultMessage = "<겨울왕국>'안나'상";
-                        resultExplain = "발랄하고 명랑한 성격을 가졌으며 겁이 없고 행동력이 강한 당신! 한편 금사빠 기질이 있기도 하지만 조화로운 것을 좋아한다고 합니다. [참고: ESFJ]";
-                        break;
-                    case '<겨울왕국>엘사':
-                        resultMessage = "<겨울왕국>'엘사'상";
-                        resultExplain = "겉으로 보기엔 차갑고 냉정해 보일 것 같지만 실제로는 여리고 착한 성격의 당신! 주변 사람들에게 조언을 해주는 어른스럽고 성숙한 면을 보여주기도 한답니다. [참고: INFJ]";
-                        break;
-                    case '<라푼젤>라푼젤':
-                        resultMessage = "<라푼젤>'라푼젤'상";
-                        resultExplain = "세상 밖을 두려워하고 남자를 멀리하는 경향이 있기도 하지만 마음속으로는 항상 호기심이 넘치고 모험심도 강한 편인 당신! 손재주가 좋고 예술에도 능하다고 합니다. [참고: ESFJ]";
-                        break;
-                    case '<메리다와 마법의 숲>메리다':
-                        resultMessage = "<메리다와 마법의 숲>'메리다'상";
-                        resultExplain = "활발하고 운동을 잘하는 편이며 규칙적인 삶을 싫어하고, 누군가 자신에게 명령하는 것을 싫어하는 당신! 자유로운 삶을 원한다고 합니다. [참고: ESTP]";
-                        break;
-                    case '<뮬란>뮬란':
-                        resultMessage = "<뮬란>'뮬란'상";
-                        resultExplain = "신체적 활동에 뛰어나며 약간은 불같은 성격이지만 소위 걸크러쉬인 당신! 하지만 정확한 해법을 확인하는 논리적인 사고를 가지고 있답니다. [참고: ISTP]";
-                        break;
-                    case '<신데렐라>신데렐라':
-                        resultMessage = "<신데렐라>'신데렐라'상";
-                        resultExplain = "괴롭힘을 받으면서도, 용기와 친절함을 잃지 않으려고 노력한 착하면서도 의지가 강한 당신! 다른 사람을 돕고자 하는 마음이 크며, 독립적인 것보다는 평화 유지를 원한다고 합니다. [참고: ISFJ]";
-                        break;
-                    case '<백설공주>백설공주':
-                        resultMessage = "<백설공주>'백설공주'상";
-                        resultExplain = "친구들과 따뜻한 우정을 나누고 가정적인 당신! 전통적인 것에 안정감을 느끼며 기존의 질서를 깨뜨리고 싶어하지 않는다고 합니다. [참고: ESFJ]";
-                        break;
-                    case '<미녀와 야수>벨':
-                        resultMessage = "<미녀와 야수>'벨'상";
-                        resultExplain = "내적 조화를 중요하게 생각하며 마음 깊은 감정을 사람들에게 잘 드러내지 않는 당신! 우아하고 지적이면서 당당한 인상이라고 합니다. [참고: INFP]";
-                        break;
-                    case '<모아나>모아나':
-                        resultMessage = "<모아나>'모아나'상";
-                        resultExplain = "책임감이 강하고, 자신의 신념대로 행동하는 당신! 전통을 지키기위해 노력하기보다는 새로운 것을 탐구하는 리더쉽과 모험심이 강하다고 합니다. [참고: ENFP]";
-                        break;
-                    case '<잠자는 숲속의 공주>오로라':
-                        resultMessage = "<잠자는 숲속의 공주>'오로라'상";
-                        resultExplain = "내성적이고 조용한 편이지만 사람들과 일하는 것을 좋아하고, 아름다운 외모로 사랑을 받는 당신! 자연을 사랑하고 동물을 사랑한다고 합니다. [참고: ISFP]";
-                        break;
-                    default:
-                        resultMessage = '알수없음';
-                        resultExplain = "알수없음";
+                if (document.getElementById("gender").checked) {
+                    switch (prediction[0].className) {
+                        case '<백설공주>일곱 난쟁이':
+                            resultMessage = "<백설공주>'일곱 난쟁이'상";
+                            resultExplain = "직관적이며 통찰력이 뛰어난 당신! 그러나 타인에게 많이 표현하지 않습니다. 정말 가까운 사이이거나, 마음이 통한 사람이여야만 자신의 마음을 열고 다양한 대화를 물흐르듯 하는 것이 특징입니다. [참고: INTJ]";
+                            break;
+                        case '<겨울왕국>크리스토프':
+                            resultMessage = "<겨울왕국>'크리스토프'상";
+                            resultExplain = "미래지향적인 삶보다는 현재를 즐기는 삶을 선호하고 여유롭고 낙천적인 성격의 당신! 경청하고 공감하면서 타인과의 공감대를 형성하기위해 노력합니다. [참고: ISFP]";
+                            break;
+                        case '<겨울왕국>한스':
+                            resultMessage = "<겨울왕국>'한스'상";
+                            resultExplain = "카리스마와 충만한 열정을 지닌 타고난 리더쉽을 가진 당신! 감정기복이 심한 편으로 거절을 잘 못하는 성격이기도 하며 상대방에 대한 공감능력이 뛰어납니다. [참고: ENFJ]";
+                            break;
+                        case '<라푼젤>플린(유진)':
+                            resultMessage = "<라푼젤>플린'(유진)'상";
+                            resultExplain = "도전적인 성향이 강하고 단조로운 일을 좋아하지 않는 당신! 자신의 말을 들어주는 사람을 좋아합니다. 아이디어를 도출해내는 것을 좋아하지만 지루하거나 단조로운 일을 맡게 되면 금방 하기 싫어합니다. [참고: ENTP]";
+                            break;
+                        case '<알라딘>알라딘':
+                            resultMessage = "<알라딘>'알라딘'상";
+                            resultExplain = "의사 결정을 할 때 개인적인 감정보다는 객관성을 따르며 논리적인 성격의 당신! 새로운 환경이나 상황에 잘 적응하는 편이며 센스, 유머가 있고 사교적입니다. 그러나 장기적인 목표를 세우는 것을 힘들어합니다. [참고: ESTP]";
+                            break;
+                        default:
+                            resultMessage = '알수없음';
+                            resultExplain = "알수없음";
+                    }
+                } else {
+                    switch (prediction[0].className) {
+                        case '<겨울왕국>안나':
+                            resultMessage = "<겨울왕국>'안나'상";
+                            resultExplain = "발랄하고 명랑한 성격을 가졌으며 겁이 없고 행동력이 강한 당신! 한편 금사빠 기질이 있기도 하지만 조화로운 것을 좋아한다고 합니다. [참고: ESFJ]";
+                            break;
+                        case '<겨울왕국>엘사':
+                            resultMessage = "<겨울왕국>'엘사'상";
+                            resultExplain = "겉으로 보기엔 차갑고 냉정해 보일 것 같지만 실제로는 여리고 착한 성격의 당신! 주변 사람들에게 조언을 해주는 어른스럽고 성숙한 면을 보여주기도 한답니다. [참고: INFJ]";
+                            break;
+                        case '<라푼젤>라푼젤':
+                            resultMessage = "<라푼젤>'라푼젤'상";
+                            resultExplain = "세상 밖을 두려워하고 남자를 멀리하는 경향이 있기도 하지만 마음속으로는 항상 호기심이 넘치고 모험심도 강한 편인 당신! 손재주가 좋고 예술에도 능하다고 합니다. [참고: ESFJ]";
+                            break;
+                        case '<메리다와 마법의 숲>메리다':
+                            resultMessage = "<메리다와 마법의 숲>'메리다'상";
+                            resultExplain = "활발하고 운동을 잘하는 편이며 규칙적인 삶을 싫어하고, 누군가 자신에게 명령하는 것을 싫어하는 당신! 자유로운 삶을 원한다고 합니다. [참고: ESTP]";
+                            break;
+                        case '<뮬란>뮬란':
+                            resultMessage = "<뮬란>'뮬란'상";
+                            resultExplain = "신체적 활동에 뛰어나며 약간은 불같은 성격이지만 소위 걸크러쉬인 당신! 하지만 정확한 해법을 확인하는 논리적인 사고를 가지고 있답니다. [참고: ISTP]";
+                            break;
+                        case '<신데렐라>신데렐라':
+                            resultMessage = "<신데렐라>'신데렐라'상";
+                            resultExplain = "괴롭힘을 받으면서도, 용기와 친절함을 잃지 않으려고 노력한 착하면서도 의지가 강한 당신! 다른 사람을 돕고자 하는 마음이 크며, 독립적인 것보다는 평화 유지를 원한다고 합니다. [참고: ISFJ]";
+                            break;
+                        case '<백설공주>백설공주':
+                            resultMessage = "<백설공주>'백설공주'상";
+                            resultExplain = "친구들과 따뜻한 우정을 나누고 가정적인 당신! 전통적인 것에 안정감을 느끼며 기존의 질서를 깨뜨리고 싶어하지 않는다고 합니다. [참고: ESFJ]";
+                            break;
+                        case '<미녀와 야수>벨':
+                            resultMessage = "<미녀와 야수>'벨'상";
+                            resultExplain = "내적 조화를 중요하게 생각하며 마음 깊은 감정을 사람들에게 잘 드러내지 않는 당신! 우아하고 지적이면서 당당한 인상이라고 합니다. [참고: INFP]";
+                            break;
+                        case '<모아나>모아나':
+                            resultMessage = "<모아나>'모아나'상";
+                            resultExplain = "책임감이 강하고, 자신의 신념대로 행동하는 당신! 전통을 지키기위해 노력하기보다는 새로운 것을 탐구하는 리더쉽과 모험심이 강하다고 합니다. [참고: ENFP]";
+                            break;
+                        case '<잠자는 숲속의 공주>오로라':
+                            resultMessage = "<잠자는 숲속의 공주>'오로라'상";
+                            resultExplain = "내성적이고 조용한 편이지만 사람들과 일하는 것을 좋아하고, 아름다운 외모로 사랑을 받는 당신! 자연을 사랑하고 동물을 사랑한다고 합니다. [참고: ISFP]";
+                            break;
+                        default:
+                            resultMessage = '알수없음';
+                            resultExplain = "알수없음";
+                    }
                 }
                 $('.result-message').html(resultMessage);
                 $('.result-explain').html(resultExplain);
