@@ -17,7 +17,12 @@
 body {
   font-family: sans-serif;
   background-color: #ffffff;
+  background-image:url(img/princess1.png), url(img/princess2.png);
+  background-position: 95% 25%, 5% 40%;
+  background-repeat: no-repeat;
+  background-size: 20%;
 }
+
 
 .file-upload {
   width: 100%;
@@ -167,14 +172,44 @@ body {
   color: #35465d;
 }
 
+@media screen and (max-width: 1800px) and (min-width: 1000px) {
+    body {
+      font-family: sans-serif;
+      background-color: #ffffff;
+      background-image:url(img/princess1.png), url(img/princess2.png);
+      background-position: 95% 1%, 5% 15%;
+      background-repeat: no-repeat;
+      background-size: 16%;
+    }
+}
+
+@media screen and (max-width: 1000px) and (min-width: 600px) {
+    body {
+      font-family: sans-serif;
+      background-color: #ffffff;
+      background-image:url(img/princess1.png), url(img/princess2.png);
+      background-position: 95% 6%, 5% 15%;
+      background-repeat: no-repeat;
+      background-size: 20%;
+    }
+}
+
 /* On screens that are 600px or less, set the background color to olive */
 @media screen and (max-width: 600px) {
-  html {
-    font-size: 10px;
-  }
+    html {
+        font-size: 10px;
+    }
     .navbar-brand {
         font-size: 2rem;
-    } 
+    }
+    body {
+      font-family: sans-serif;
+      background-color: #ffffff;
+      background-image:url(img/princess1.png), url(img/princess2.png);
+      background-position: 95% 7%, 5% 15%;
+      background-repeat: no-repeat;
+      background-size: 20%;
+    }
 }
 
 .youtube-link {
