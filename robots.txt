@@ -1,3 +1,3 @@
 User-agent: *
 Allow:/
-Sitemap: https://disney-face.netlify.app/sitemap.xml
+Sitemap: https://disneyprincess-face.netlify.app/sitemap.xml
